@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Christmas with Iggy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --teal-deep: #031f1e;
+      --teal-dark: #01211f;
+      --teal-soft: #59c1b1;
+      --red-coral: #ff8177;
+      --warm-gold: #ffd977;
+      --warm-brown: #c69a6b;
+      --light-soft: #cfe5e2;
+      --offwhite: #fefbf4;
+      --ink: #010d0f;
+      --glass: rgba(2, 21, 23, 0.55);
+      --frost: rgba(255, 255, 255, 0.08);
+      --text-muted: rgba(255, 255, 255, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 20% 20%, #104240, var(--teal-deep) 55%, #010909);
+      background-attachment: fixed;
+      color: var(--offwhite);
+      overflow-x: hidden;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255, 216, 94, 0.25), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.18), transparent 45%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HERO - poster style (no text overlay) */
+
+    .hero {
+      position: relative;
+      padding: clamp(3.5rem, 7vw, 5.5rem) 1.5rem 3rem;
+      background: linear-gradient(180deg, rgba(1, 17, 18, 0.7), rgba(1, 17, 18, 0));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-inner {
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, 5vw, 3.25rem);
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-poster-wrapper {
+      width: min(1200px, 96vw);
+      border-radius: 1.8rem;
+      padding: clamp(0.32rem, 0.7vw, 0.65rem);
+      background: linear-gradient(135deg, rgba(255, 216, 119, 0.3), rgba(255, 129, 119, 0.4));
+      box-shadow: 0 40px 70px rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: visible;
+      z-index: 1;
+      margin: 0 auto;
+    }
+
+    .hero-poster {
+      position: relative;
+      z-index: 2;
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 1.5rem;
+      border: clamp(4px, 0.5vw, 8px) solid rgba(8, 26, 28, 0.9);
+      box-shadow: 0 25px 40px rgba(0, 0, 0, 0.35);
+      will-change: transform;
+    }
+
+    .hero-frame-base {
+      position: absolute;
+      inset: clamp(0.08rem, 0.5vw, 0.28rem);
+      border-radius: 1.65rem;
+      background: linear-gradient(135deg, rgba(255, 216, 119, 0.85), rgba(255, 163, 105, 0.9));
+      box-shadow:
+        inset 0 4px 12px rgba(255, 255, 255, 0.45),
+        inset 0 -8px 16px rgba(123, 61, 33, 0.45);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-poster-wrapper::before {
+      content: "";
+      position: absolute;
+      inset: -3.5rem;
+      background: radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.35), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(255, 216, 94, 0.5), transparent 60%);
+      filter: blur(40px);
+      opacity: 0.75;
+      z-index: -2;
+    }
+
+    .hero-poster-wrapper::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 1.8rem;
+      border: clamp(4px, 0.45vw, 5px) solid transparent;
+      background:
+        linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)) padding-box,
+        linear-gradient(130deg, rgba(255, 216, 119, 0.95), rgba(255, 129, 119, 0.8), rgba(91, 200, 191, 0.85)) border-box;
+      background-size: 250% 250%;
+      animation: heroFrameGlow 7s linear infinite;
+      pointer-events: none;
+      z-index: 3;
+      box-shadow: 0 0 18px rgba(255, 216, 119, 0.45);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) padding-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+    }
+
+    @keyframes heroFrameGlow {
+      0% {
+        background-position: 0% 50%;
+        box-shadow: 0 0 16px rgba(255, 216, 119, 0.4);
+      }
+      50% {
+        background-position: 100% 50%;
+        box-shadow: 0 0 24px rgba(255, 248, 235, 0.66);
+      }
+      100% {
+        background-position: 0% 50%;
+        box-shadow: 0 0 16px rgba(255, 216, 119, 0.4);
+      }
+    }
+
+    .hero-floating-deco {
+      position: absolute;
+      width: clamp(90px, 12vw, 140px);
+      aspect-ratio: 1 / 1;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0) 60%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(0, 0, 0, 0.2)),
+        var(--ornament-gradient, linear-gradient(135deg, rgba(255, 216, 119, 0.9), rgba(255, 129, 119, 0.55)));
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      box-shadow:
+        0 25px 45px rgba(0, 0, 0, 0.45),
+        inset 0 -18px 28px rgba(0, 0, 0, 0.32),
+        inset 0 12px 18px rgba(255, 255, 255, 0.3);
+      opacity: 0.8;
+      pointer-events: none;
+      animation: heroFloat 12s ease-in-out infinite;
+      mix-blend-mode: screen;
+      z-index: 1;
+    }
+
+    .hero-floating-deco::before {
+      content: "";
+      position: absolute;
+      top: calc(-55px - 0.35rem);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 2px;
+      height: 55px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0));
+      opacity: 0.9;
+    }
+
+    .hero-floating-deco.deco-left {
+      top: 6%;
+      left: clamp(3%, 9vw, 7%);
+      --ornament-gradient: linear-gradient(135deg, rgba(255, 216, 119, 0.9), rgba(255, 161, 96, 0.6));
+      animation-delay: -2s;
+    }
+
+    .hero-floating-deco.deco-right {
+      bottom: 5%;
+      right: clamp(4%, 8vw, 9%);
+      --ornament-gradient: linear-gradient(135deg, rgba(121, 219, 208, 0.85), rgba(3, 87, 89, 0.8));
+      animation-duration: 14s;
+    }
+
+    @keyframes heroFloat {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      50% {
+        transform: translate3d(12px, -16px, 0) scale(1.05);
+      }
+      100% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    /* Buttons BELOW the poster, not on top of it */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.85rem;
+      justify-content: center;
+      margin-top: 0.4rem;
+    }
+
+    .hero-actions-hero {
+      margin-top: clamp(1rem, 4vw, 2.5rem);
+    }
+
+    .btn {
+      padding: 0.95rem 2.2rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.97rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      letter-spacing: 0.02em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      will-change: transform;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--red-coral), #ffb088);
+      color: #ffffff;
+      box-shadow: 0 20px 45px rgba(255, 129, 119, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--offwhite);
+      backdrop-filter: blur(6px);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 216, 119, 0.35);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    /* Sections */
+
+    .section {
+      padding: clamp(3.5rem, 6vw, 5rem) 1.5rem;
+      position: relative;
+    }
+
+    .section-alt {
+      background: linear-gradient(180deg, rgba(1, 17, 18, 0.45), rgba(1, 17, 18, 0));
+    }
+
+    .section-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: clamp(2.5rem, 4vw, 3.5rem);
+      border-radius: 1.75rem;
+      background: rgba(3, 20, 21, 0.78);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .section-eyebrow {
+      font-size: 0.8rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .section-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 4vw, 2.7rem);
+      margin-bottom: 0.1rem;
+      color: #f8f3e9;
+    }
+
+    .section-subtitle {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* Cards */
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: clamp(1.2rem, 3vw, 1.8rem);
+    }
+
+    .card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      background: rgba(2, 17, 18, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      min-height: 230px;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -30% -5% auto;
+      height: 65%;
+      background: radial-gradient(circle, rgba(255, 216, 119, 0.4), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.4rem;
+      background: linear-gradient(135deg, var(--warm-gold), #ffb088);
+      color: #1b2827;
+      box-shadow: 0 12px 28px rgba(255, 216, 119, 0.4);
+    }
+
+    .card-title {
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    .card-body {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    /* RSVP / form */
+
+    .rsvp-section {
+      padding: clamp(4rem, 6vw, 5.5rem) 1.5rem;
+      background: linear-gradient(180deg, rgba(255, 216, 119, 0.08), rgba(1, 15, 16, 0.95));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .rsvp-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 10% 10%, rgba(255, 255, 255, 0.08), transparent 55%),
+        radial-gradient(circle at 90% 0%, rgba(255, 216, 119, 0.15), transparent 60%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .rsvp-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      background: rgba(2, 17, 18, 0.86);
+      border-radius: 1.9rem;
+      padding: clamp(2.2rem, 4vw, 3.3rem);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 32px 60px rgba(0, 0, 0, 0.7);
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: clamp(2rem, 4vw, 3.3rem);
+      align-items: start;
+      overflow: hidden;
+    }
+
+    .rsvp-inner::before {
+      content: "";
+      position: absolute;
+      inset: 1.2rem;
+      border-radius: 1.4rem;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+
+    .rsvp-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .rsvp-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 2rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .rsvp-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+    }
+
+    .rsvp-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .rsvp-list li {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      display: flex;
+      gap: 0.5rem;
+      align-items: flex-start;
+    }
+
+    .rsvp-list li::before {
+      content: "•";
+      color: var(--warm-gold);
+      font-size: 1.2rem;
+      line-height: 1;
+      margin-top: 0.1rem;
+    }
+
+    .form-field {
+      margin-bottom: 1.1rem;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.86rem;
+      margin-bottom: 0.3rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.78rem 0.95rem;
+      border-radius: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--offwhite);
+      backdrop-filter: blur(6px);
+      font: inherit;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .form-input:focus {
+      border-color: var(--warm-gold);
+      box-shadow: 0 0 0 1px rgba(255, 216, 94, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .inline-fields {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+    }
+
+    .form-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.6rem;
+    }
+
+    .error-message {
+      display: none;
+      color: #ffbdbd;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .success-message {
+      display: none;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      color: #bff7d3;
+      text-align: center;
+    }
+
+    /* Snow */
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.9);
+      pointer-events: none;
+      z-index: 40;
+    }
+
+    /* Lights */
+
+    .lights-strip {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, 100%);
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 2.5rem 0.2rem;
+      pointer-events: none;
+      z-index: 25;
+    }
+
+    .light-bulb {
+      width: 12px;
+      height: 18px;
+      border-radius: 50% 50% 45% 45%;
+      background: var(--warm-gold);
+      box-shadow: 0 0 12px rgba(255, 216, 94, 0.9);
+      opacity: 0.8;
+    }
+
+    .light-bulb.red {
+      background: var(--red-coral);
+      box-shadow: 0 0 12px rgba(208, 74, 71, 0.9);
+    }
+
+    .light-bulb.green {
+      background: #3ea88c;
+      box-shadow: 0 0 12px rgba(62, 168, 140, 0.9);
+    }
+
+    /* Footer */
+
+    .footer {
+      text-align: center;
+      padding: 1.7rem 1rem 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(6px);
+    }
+
+    @media (max-width: 900px) {
+      .hero-poster-wrapper {
+        width: min(100%, 96vw);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding-top: 3rem;
+      }
+
+      .hero-poster {
+        border-radius: 1rem;
+      }
+
+      .section-inner {
+        padding: 2rem 1.5rem;
+      }
+
+      .rsvp-inner {
+        padding: 2rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- Twinkling lights -->
+    <div class="lights-strip" id="lightsStrip"></div>
+
+    <!-- HERO -->
+    <header class="hero">
+      <span class="hero-floating-deco deco-left" aria-hidden="true"></span>
+      <span class="hero-floating-deco deco-right" aria-hidden="true"></span>
+      <div class="hero-inner">
+        <div class="hero-poster-wrapper">
+          <span class="hero-frame-base" aria-hidden="true"></span>
+          <img src="main.jpg" alt="Christmas with Iggy hero poster" class="hero-poster parallax" />
+        </div>
+
+        <div class="hero-actions hero-actions-hero">
+          <button class="btn btn-primary" id="scrollToRsvp">
+            <span class="btn-icon">&#x2728;</span>
+            RSVP for the event
+          </button>
+          <button class="btn btn-secondary" id="scrollToAbout">
+            <span class="btn-icon">&#x2139;</span>
+            Learn more
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ABOUT SECTION -->
+    <section class="section section-alt" id="about">
+      <div class="section-inner">
+        <div class="section-header">
+          <div class="section-eyebrow">About the evening</div>
+          <h2 class="section-title">A Christmas celebration for the whole parish</h2>
+          <p class="section-subtitle">
+            Expect an atmosphere of festive joy &mdash; from carols and performances,
+            to activities for children and a cozy Christmas market.
+          </p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-icon">🍲</div>
+            <h3 class="card-title">Food & fellowship</h3>
+            <p class="card-body">
+              Enjoy simple, hearty food and treats while catching up with fellow
+              parishioners, family and friends.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🎶</div>
+            <h3 class="card-title">Music & performances</h3>
+            <p class="card-body">
+              Soak in Christmas carols and performances from our parish communities,
+              choirs and children.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">🎁</div>
+            <h3 class="card-title">Activities & market</h3>
+            <p class="card-body">
+              Look forward to family-friendly activities, simple crafts and a
+              Christmas market with meaningful gifts.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RSVP / FORM SECTION -->
+    <section class="rsvp-section" id="rsvp">
+      <div class="rsvp-inner" id="rsvpBox">
+        <div class="rsvp-copy">
+          <h2 class="rsvp-title">RSVP &mdash; Christmas with Iggy</h2>
+          <p class="rsvp-subtitle">
+            Let us know how many are coming so we can prepare food, crafts, and activities for everyone.
+          </p>
+          <ul class="rsvp-list">
+            <li>Church of St Ignatius Church &middot; Parish Hall, Sacred Heart Hall and Level 2 Rooms</li>
+            <li>Doors open at 4.00PM</li>
+            <li>Families and friends of all ages welcome</li>
+          </ul>
+        </div>
+
+        <form id="rsvpForm" novalidate>
+          <div class="form-field">
+            <label class="form-label" for="name">Name</label>
+            <input class="form-input" id="name" name="name" type="text" placeholder="Your full name" required />
+          </div>
+
+          <div class="form-field">
+            <label class="form-label" for="email">Email address</label>
+            <input class="form-input" id="email" name="email" type="email" placeholder="you@example.com" required />
+            <div class="error-message" id="emailError">Please enter a valid email address.</div>
+          </div>
+
+          <div class="inline-fields">
+            <div class="form-field">
+              <label class="form-label" for="adults">No. of adults</label>
+              <input class="form-input" id="adults" name="adults" type="number" min="0" step="1" value="1" required />
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="kids">No. of kids</label>
+              <input class="form-input" id="kids" name="kids" type="number" min="0" step="1" value="0" required />
+            </div>
+          </div>
+
+          <div class="form-note">
+            If you're unsure of exact numbers, feel free to give your best estimate for now.
+          </div>
+
+          <div class="form-field" style="margin-top:1.4rem;">
+            <button class="btn btn-primary" type="submit">
+              <span class="btn-icon">&#x1F4E9;</span>
+              Submit RSVP
+            </button>
+          </div>
+
+          <div class="error-message" id="generalError">
+            Oops, something went wrong. Please check your details and try again.
+          </div>
+
+          <div class="success-message" id="successMessage">
+            &#x2728; Thank you! Your RSVP has been received. We look forward to celebrating with you.
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; <span id="year"></span> St Ignatius Church &mdash; Christmas with Iggy
+    </footer>
+  </div>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    const scrollToRsvpBtn = document.getElementById("scrollToRsvp");
+    const scrollToAboutBtn = document.getElementById("scrollToAbout");
+    const rsvpSection = document.getElementById("rsvp");
+    const aboutSection = document.getElementById("about");
+    const rsvpBox = document.getElementById("rsvpBox");
+    const lightsStrip = document.getElementById("lightsStrip");
+    const rsvpForm = document.getElementById("rsvpForm");
+    const emailInput = document.getElementById("email");
+    const emailError = document.getElementById("emailError");
+    const generalError = document.getElementById("generalError");
+    const successMessage = document.getElementById("successMessage");
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    function smoothScrollTo(el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    scrollToRsvpBtn.addEventListener("click", () => smoothScrollTo(rsvpSection));
+    scrollToAboutBtn.addEventListener("click", () => smoothScrollTo(aboutSection));
+
+    // Buttons entrance animation
+    gsap.from(".hero-actions .btn", {
+      opacity: 0,
+      y: 30,
+      duration: 1,
+      ease: "power3.out",
+      stagger: 0.15,
+      delay: 0.4
+    });
+
+    // Parallax on the poster
+    gsap.to(".parallax", {
+      yPercent: 15,
+      ease: "none",
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Cards entrance
+    gsap.from(".card", {
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      ease: "power2.out",
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: ".card-grid",
+        start: "top 80%"
+      }
+    });
+
+    // RSVP entrance
+    gsap.from(rsvpBox, {
+      opacity: 0,
+      y: 60,
+      duration: 0.9,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: rsvpSection,
+        start: "top 85%"
+      }
+    });
+
+    // Twinkling lights
+    const bulbCount = 14;
+    const bulbColors = ["", "red", "green"]; // base = gold
+
+    for (let i = 0; i < bulbCount; i++) {
+      const bulb = document.createElement("div");
+      const colorClass = bulbColors[Math.floor(Math.random() * bulbColors.length)];
+      bulb.className = "light-bulb" + (colorClass ? " " + colorClass : "");
+      lightsStrip.appendChild(bulb);
+
+      gsap.to(bulb, {
+        opacity: () => 0.3 + Math.random() * 0.7,
+        scaleY: () => 0.9 + Math.random() * 0.3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+        duration: 0.7 + Math.random() * 0.9,
+        delay: Math.random() * 1.5
+      });
+    }
+
+    // Snowfall
+    function createSnowflake() {
+      const flake = document.createElement("div");
+      flake.classList.add("snowflake");
+      document.body.appendChild(flake);
+
+      const startX = Math.random() * window.innerWidth;
+      const endX = startX + (Math.random() * 60 - 30);
+      const fallDuration = 5 + Math.random() * 5;
+      const size = 3 + Math.random() * 4;
+
+      flake.style.left = startX + "px";
+      flake.style.width = size + "px";
+      flake.style.height = size + "px";
+
+      gsap.to(flake, {
+        y: window.innerHeight + 10,
+        x: endX,
+        opacity: 0.1,
+        duration: fallDuration,
+        ease: "none",
+        onComplete: () => flake.remove()
+      });
+    }
+
+    setInterval(() => {
+      for (let i = 0; i < 2; i++) createSnowflake();
+    }, 350);
+
+    // ===== GOOGLE APPS SCRIPT INTEGRATION =====
+    // Replace with your deployed Apps Script Web App URL
+    const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+    }
+
+    rsvpForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      generalError.style.display = "none";
+      successMessage.style.display = "none";
+      emailError.style.display = "none";
+
+      const name = document.getElementById("name").value.trim();
+      const email = emailInput.value.trim();
+      const adults = document.getElementById("adults").value.trim();
+      const kids = document.getElementById("kids").value.trim();
+
+      if (!name || !isValidEmail(email)) {
+        if (!isValidEmail(email)) {
+          emailError.style.display = "block";
+        }
+        gsap.fromTo(
+          rsvpBox,
+          { x: -10 },
+          {
+            x: 10,
+            duration: 0.08,
+            ease: "power2.inOut",
+            yoyo: true,
+            repeat: 5,
+            onComplete: () => gsap.to(rsvpBox, { x: 0, duration: 0.05 })
+          }
+        );
+        return;
+      }
+
+      const payload = new URLSearchParams({ name, email, adults, kids });
+
+      fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: payload
+      }).then(() => {
+        successMessage.style.display = "block";
+        rsvpForm.reset();
+      }).catch(() => {
+        generalError.style.display = "block";
+      });
+    });
+  </script>
+</body>
+</html>
