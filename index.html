@@ -810,8 +810,13 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    scrollToRsvpBtn.addEventListener("click", () => smoothScrollTo(rsvpSection));
-    scrollToAboutBtn.addEventListener("click", () => smoothScrollTo(aboutSection));
+    if (scrollToRsvpBtn && rsvpSection) {
+      scrollToRsvpBtn.addEventListener("click", () => smoothScrollTo(rsvpSection));
+    }
+
+    if (scrollToAboutBtn && aboutSection) {
+      scrollToAboutBtn.addEventListener("click", () => smoothScrollTo(aboutSection));
+    }
 
     // Buttons entrance animation
     gsap.from(".hero-actions .btn", {
