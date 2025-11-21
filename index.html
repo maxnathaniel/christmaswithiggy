@@ -273,6 +273,31 @@
       will-change: transform;
     }
 
+    .btn.loading {
+      position: relative;
+      pointer-events: none;
+      color: transparent;
+      gap: 0;
+      justify-content: center;
+    }
+
+    .btn.loading .btn-icon {
+      visibility: hidden;
+    }
+
+    .btn.loading::after {
+      content: "";
+      width: 1.2rem;
+      height: 1.2rem;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.55);
+      border-top-color: #ffffff;
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      animation: button-spin 0.75s linear infinite;
+    }
+
     .btn-primary {
       background: linear-gradient(120deg, var(--red-coral), #ffb088);
       color: #ffffff;
@@ -299,6 +324,15 @@
     .btn-icon {
       font-size: 1.1rem;
       line-height: 1;
+    }
+
+    @keyframes button-spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* Sections */
@@ -807,11 +841,25 @@
     const emailError = document.getElementById("emailError");
     const generalError = document.getElementById("generalError");
     const successMessage = document.getElementById("successMessage");
+    const submitButton = rsvpForm ? rsvpForm.querySelector('button[type="submit"]') : null;
 
     document.getElementById("year").textContent = new Date().getFullYear();
 
     function smoothScrollTo(el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function setSubmitLoading(isLoading) {
+      if (!submitButton) return;
+      if (isLoading) {
+        submitButton.classList.add("loading");
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+      } else {
+        submitButton.classList.remove("loading");
+        submitButton.disabled = false;
+        submitButton.removeAttribute("aria-busy");
+      }
     }
 
     if (scrollToRsvpBtn && rsvpSection) {
@@ -956,6 +1004,7 @@
       }
 
       const payload = new URLSearchParams({ name, email, adults, kids });
+      setSubmitLoading(true);
 
       fetch(APPS_SCRIPT_URL, {
         method: "POST",
@@ -983,6 +1032,8 @@
         rsvpForm.reset();
       }).catch(() => {
         generalError.style.display = "block";
+      }).finally(() => {
+        setSubmitLoading(false);
       });
     });
   </script>
