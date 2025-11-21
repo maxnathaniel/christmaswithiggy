@@ -683,36 +683,40 @@
           <div class="section-eyebrow">About the evening</div>
           <h2 class="section-title">A Christmas celebration for the whole parish</h2>
           <p class="section-subtitle">
-            Expect an atmosphere of festive joy &mdash; from carols and performances,
-            to activities for children and a cozy Christmas market.
+            Invite a friend or someone new to share in the joy of the newborn Christ at our parish's Christmas Fair.
           </p>
         </div>
 
         <div class="card-grid">
           <article class="card">
-            <div class="card-icon">🍲</div>
-            <h3 class="card-title">Food & fellowship</h3>
+            <div class="card-icon">&#x1F37D;</div>
+            <h3 class="card-title">Food, fellowship &amp; music</h3>
             <p class="card-body">
-              Enjoy simple, hearty food and treats while catching up with fellow
-              parishioners, family and friends.
+              Enjoy simple, hearty food and treats while reconnecting with fellow parishioners as live carols fill the hall.
             </p>
           </article>
 
           <article class="card">
-            <div class="card-icon">🎶</div>
-            <h3 class="card-title">Music & performances</h3>
+            <div class="card-icon">&#x2728;</div>
+            <h3 class="card-title">SSVP Christmas Make a Wish Initiative</h3>
             <p class="card-body">
-              Soak in Christmas carols and performances from our parish communities,
-              choirs and children.
+              We are rallying together to raise funds so SSVP beneficiaries can replace essential household appliances and celebrate with dignity.
             </p>
           </article>
 
           <article class="card">
-            <div class="card-icon">🎁</div>
-            <h3 class="card-title">Activities & market</h3>
+            <div class="card-icon">&#x1F31F;</div>
+            <h3 class="card-title">Activities for all ages</h3>
             <p class="card-body">
-              Look forward to family-friendly activities, simple crafts and a
-              Christmas market with meaningful gifts.
+              Look forward to family-friendly activities, simple crafts, and reflective moments for kids and the young at heart.
+            </p>
+          </article>
+
+          <article class="card">
+            <div class="card-icon">&#x1F381;</div>
+            <h3 class="card-title">Christmas Market</h3>
+            <p class="card-body">
+              Browse a cozy Christmas market filled with meaningful gifts handmade by our communities.
             </p>
           </article>
         </div>
@@ -781,7 +785,7 @@
     </section>
 
     <footer class="footer">
-      &copy; <span id="year"></span> St Ignatius Church &mdash; Christmas with Iggy
+      &copy; <span id="year"></span> Church of St Ignatius &mdash; Christmas with Iggy
     </footer>
   </div>
 
@@ -915,9 +919,7 @@
       for (let i = 0; i < 2; i++) createSnowflake();
     }, 350);
 
-    // ===== GOOGLE APPS SCRIPT INTEGRATION =====
-    // Replace with your deployed Apps Script Web App URL
-    const APPS_SCRIPT_URL = "PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzc2gEFowpcD5lxjwGeuAZEugnsC14-bZFQjs5Wgw7vTcmZ6KypF3vrFihvUVdEp9PP/exec";
 
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -957,10 +959,26 @@
 
       fetch(APPS_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: payload
-      }).then(() => {
+      }).then(async (response) => {
+        if (!response.ok && APPS_SCRIPT_URL.includes("PASTE_YOUR_APPS_SCRIPT_WEB_APP_URL_HERE")) {
+          throw new Error("Apps Script URL not configured");
+        }
+
+        if (!response.ok) {
+          throw new Error("Network error while saving RSVP");
+        }
+
+        try {
+          const data = await response.json();
+          if (data.status && data.status !== "success") {
+            throw new Error("Apps Script reported an error");
+          }
+        } catch (err) {
+          // Ignore JSON errors since Apps Script can also return empty bodies
+        }
+
         successMessage.style.display = "block";
         rsvpForm.reset();
       }).catch(() => {
