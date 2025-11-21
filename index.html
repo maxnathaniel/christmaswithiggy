@@ -200,8 +200,11 @@
         inset 0 -18px 28px rgba(0, 0, 0, 0.32),
         inset 0 12px 18px rgba(255, 255, 255, 0.3);
       opacity: 0.8;
-      pointer-events: none;
+      cursor: pointer;
+      pointer-events: auto;
       animation: heroFloat 12s ease-in-out infinite;
+      transition: transform 0.45s ease, box-shadow 0.45s ease, opacity 0.45s ease, filter 0.45s ease;
+      will-change: transform;
       mix-blend-mode: screen;
       z-index: 1;
     }
@@ -230,6 +233,19 @@
       right: clamp(4%, 8vw, 9%);
       --ornament-gradient: linear-gradient(135deg, rgba(121, 219, 208, 0.85), rgba(3, 87, 89, 0.8));
       animation-duration: 14s;
+    }
+
+    .hero-floating-deco:hover,
+    .hero-floating-deco:focus-visible {
+      animation-play-state: paused;
+      transform: translate3d(0, -14px, 0) scale(1.12);
+      box-shadow:
+        0 30px 55px rgba(0, 0, 0, 0.55),
+        inset 0 -20px 32px rgba(0, 0, 0, 0.35),
+        inset 0 14px 20px rgba(255, 255, 255, 0.32);
+      opacity: 1;
+      filter: drop-shadow(0 12px 25px rgba(255, 255, 255, 0.25));
+      outline: none;
     }
 
     @keyframes heroFloat {
@@ -446,13 +462,24 @@
     /* Cards */
 
     .card-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      display: flex;
       gap: clamp(1.4rem, 3vw, 2rem);
       align-items: stretch;
     }
 
+    .card-grid .card {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    @media (max-width: 780px) {
+      .card-grid {
+        flex-direction: column;
+      }
+    }
+
     .card {
+      margin: 0;
       position: relative;
       overflow: hidden;
       border-radius: 1.5rem;
@@ -1031,16 +1058,20 @@
       }
     });
 
-    // Cards entrance
+    // Cards entrance (fade + scale, no vertical shift to keep alignment)
     gsap.from(".card", {
       opacity: 0,
-      y: 40,
+      scale: 0.94,
       duration: 0.8,
       ease: "power2.out",
       stagger: 0.15,
+      transformOrigin: "center top",
       scrollTrigger: {
         trigger: ".card-grid",
         start: "top 80%"
+      },
+      onComplete: function () {
+        gsap.set(this.targets(), { clearProps: "transform" });
       }
     });
 
