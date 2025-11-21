@@ -386,12 +386,70 @@
       line-height: 1.6;
     }
 
+    .invite-banner {
+      margin: 1rem auto 0;
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      max-width: 620px;
+    }
+
+    .invite-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--warm-gold), var(--red-coral));
+      display: grid;
+      place-items: center;
+      font-size: 1.5rem;
+      color: #1b2827;
+      box-shadow: 0 15px 30px rgba(255, 129, 119, 0.35);
+    }
+
+    .invite-copy {
+      text-align: left;
+    }
+
+    .invite-copy strong {
+      display: block;
+      font-size: 1.05rem;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.25rem;
+      color: #fff8ed;
+    }
+
+    .invite-copy span {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.97rem;
+      line-height: 1.5;
+    }
+
+    .offering-note {
+      margin-top: 1rem;
+      padding: 0.85rem 1.1rem;
+      border-radius: 0.75rem;
+      background: rgba(255, 216, 119, 0.13);
+      color: #ffe5b1;
+      font-weight: 500;
+      border: 1px solid rgba(255, 216, 119, 0.35);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     /* Cards */
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: clamp(1.2rem, 3vw, 1.8rem);
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: clamp(1.4rem, 3vw, 2rem);
+      align-items: stretch;
     }
 
     .card {
@@ -407,6 +465,7 @@
       flex-direction: column;
       gap: 0.9rem;
       min-height: 230px;
+      height: 100%;
     }
 
     .card::before {
@@ -447,7 +506,41 @@
 
     .card-title {
       font-weight: 600;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
+    }
+
+    .card-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.65);
+    }
+
+    .card-paired {
+      gap: 1.2rem;
+    }
+
+    .card-subfeature {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.8rem;
+      padding: 0.9rem 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-subfeature:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .card-subtitle {
+      font-size: 1.05rem;
+      margin-bottom: 0.35rem;
+      color: #fff8ed;
+    }
+
+    .card-subfeature .card-body {
+      margin: 0;
     }
 
     .card-body {
@@ -586,6 +679,23 @@
       margin-top: 0.6rem;
     }
 
+    .form-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      margin-top: 0.8rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.92rem;
+    }
+
+    .form-check input[type="checkbox"] {
+      width: 1.05rem;
+      height: 1.05rem;
+      margin-top: 0.15rem;
+      accent-color: var(--red-coral);
+      cursor: pointer;
+    }
+
     .error-message {
       display: none;
       color: #ffbdbd;
@@ -716,42 +826,64 @@
         <div class="section-header">
           <div class="section-eyebrow">About the evening</div>
           <h2 class="section-title">A Christmas celebration for the whole parish</h2>
-          <p class="section-subtitle">
-            Invite a friend or someone new to share in the joy of the newborn Christ at our parish's Christmas Fair.
-          </p>
+          <div class="invite-banner">
+            <span class="invite-icon">&#x1F91D;</span>
+            <div class="invite-copy">
+              <strong>Bring a friend or someone new.</strong>
+              <span>Share the joy of the newborn Christ together at our parish's Christmas Fair.</span>
+            </div>
+          </div>
         </div>
 
         <div class="card-grid">
-          <article class="card">
-            <div class="card-icon">&#x1F37D;</div>
-            <h3 class="card-title">Food, fellowship &amp; music</h3>
-            <p class="card-body">
-              Enjoy simple, hearty food and treats while reconnecting with fellow parishioners as live carols fill the hall.
-            </p>
+          <article class="card card-paired">
+            <div class="card-eyebrow">Gather together</div>
+            <h3 class="card-title">Hospitality &amp; activities</h3>
+
+            <div class="card-subfeature">
+              <div class="card-icon">&#x1F37D;</div>
+              <div>
+                <h4 class="card-subtitle">Food, fellowship &amp; music</h4>
+                <p class="card-body">
+                  Enjoy simple, hearty food and treats while reconnecting with fellow parishioners as live carols fill the hall.
+                </p>
+              </div>
+            </div>
+
+            <div class="card-subfeature">
+              <div class="card-icon">&#x1F31F;</div>
+              <div>
+                <h4 class="card-subtitle">Activities for all ages</h4>
+                <p class="card-body">
+                  Look forward to family-friendly activities, simple crafts, and reflective moments for kids and the young at heart.
+                </p>
+              </div>
+            </div>
           </article>
 
-          <article class="card">
-            <div class="card-icon">&#x2728;</div>
-            <h3 class="card-title">SSVP Christmas Make a Wish Initiative</h3>
-            <p class="card-body">
-              We are rallying together to raise funds so SSVP beneficiaries can replace essential household appliances and celebrate with dignity.
-            </p>
-          </article>
+          <article class="card card-paired">
+            <div class="card-eyebrow">Give &amp; share</div>
+            <h3 class="card-title">Mission &amp; marketplace</h3>
 
-          <article class="card">
-            <div class="card-icon">&#x1F31F;</div>
-            <h3 class="card-title">Activities for all ages</h3>
-            <p class="card-body">
-              Look forward to family-friendly activities, simple crafts, and reflective moments for kids and the young at heart.
-            </p>
-          </article>
+            <div class="card-subfeature">
+              <div class="card-icon">&#x2728;</div>
+              <div>
+                <h4 class="card-subtitle">SSVP Christmas Make a Wish Initiative</h4>
+                <p class="card-body">
+                  We are rallying together to raise funds so SSVP beneficiaries can replace essential household appliances and celebrate with dignity.
+                </p>
+              </div>
+            </div>
 
-          <article class="card">
-            <div class="card-icon">&#x1F381;</div>
-            <h3 class="card-title">Christmas Market</h3>
-            <p class="card-body">
-              Browse a cozy Christmas market filled with meaningful gifts handmade by our communities.
-            </p>
+            <div class="card-subfeature">
+              <div class="card-icon">&#x1F381;</div>
+              <div>
+                <h4 class="card-subtitle">Christmas Market</h4>
+                <p class="card-body">
+                  Browse a cozy Christmas market filled with meaningful gifts handmade by our communities.
+                </p>
+              </div>
+            </div>
           </article>
         </div>
       </div>
@@ -765,6 +897,7 @@
           <p class="rsvp-subtitle">
             Let us know how many are coming so we can prepare food, crafts, and activities for everyone.
           </p>
+          <p class="offering-note">A love offering of $20 is encouraged to support the evening's hospitality and outreach.</p>
           <ul class="rsvp-list">
             <li>Church of St Ignatius Church &middot; Parish Hall, Sacred Heart Hall and Level 2 Rooms</li>
             <li>Doors open at 4.00PM</li>
@@ -795,6 +928,11 @@
               <input class="form-input" id="kids" name="kids" type="number" min="0" step="1" value="0" required />
             </div>
           </div>
+
+          <label class="form-check" for="bringingFriend">
+            <input type="checkbox" id="bringingFriend" name="bringingFriend" />
+            <span>Are you bringing a friend?</span>
+          </label>
 
           <div class="form-note">
             If you're unsure of exact numbers, feel free to give your best estimate for now.
@@ -841,6 +979,7 @@
     const emailError = document.getElementById("emailError");
     const generalError = document.getElementById("generalError");
     const successMessage = document.getElementById("successMessage");
+    const bringingFriendInput = document.getElementById("bringingFriend");
     const submitButton = rsvpForm ? rsvpForm.querySelector('button[type="submit"]') : null;
 
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -967,7 +1106,7 @@
       for (let i = 0; i < 2; i++) createSnowflake();
     }, 350);
 
-    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzc2gEFowpcD5lxjwGeuAZEugnsC14-bZFQjs5Wgw7vTcmZ6KypF3vrFihvUVdEp9PP/exec";
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbw3vnruhVmekQp7suA_llXgx5uJNGk0LloCi_Y19sX5m2FzQ4tWTsuLxmtz0R2d_F90/exec";
 
     function isValidEmail(email) {
       return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
@@ -1003,7 +1142,8 @@
         return;
       }
 
-      const payload = new URLSearchParams({ name, email, adults, kids });
+      const bringingFriend = bringingFriendInput && bringingFriendInput.checked ? "Yes" : "No";
+      const payload = new URLSearchParams({ name, email, adults, kids, bringingFriend });
       setSubmitLoading(true);
 
       fetch(APPS_SCRIPT_URL, {
