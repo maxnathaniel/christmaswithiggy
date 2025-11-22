@@ -497,6 +497,23 @@
       color: #c5ebe4;
     }
 
+    .offering-note-mobile,
+    .paynow-details-mobile {
+      display: none;
+    }
+
+    @media (max-width: 780px) {
+      .offering-note-desktop,
+      .paynow-details-desktop {
+        display: none;
+      }
+
+      .offering-note-mobile,
+      .paynow-details-mobile {
+        display: block;
+      }
+    }
+
     /* Cards */
 
     .card-grid {
@@ -1012,8 +1029,8 @@
             <li>8.00PM onwards - Carolling</li>
           </ul>
           <p class="rsvp-note">*Finger Food will be served before Dinner</p>
-          <p class="offering-note">A love offering of $20 is encouraged. &#x1F64F;</p>
-          <div class="paynow-details">
+          <p class="offering-note offering-note-desktop">A love offering of $20 is encouraged. &#x1F64F;</p>
+          <div class="paynow-details paynow-details-desktop">
             <div class="paynow-title">PayNow Details</div>
             <div class="paynow-info">
               <span>UEN:</span> T08CC4052A<br>
@@ -1068,6 +1085,15 @@
 
           <div class="success-message" id="successMessage">
             &#x2728; Thank you! Your RSVP has been received. We look forward to celebrating with you.
+          </div>
+
+          <p class="offering-note offering-note-mobile">A love offering of $20 is encouraged. &#x1F64F;</p>
+          <div class="paynow-details paynow-details-mobile">
+            <div class="paynow-title">PayNow Details</div>
+            <div class="paynow-info">
+              <span>UEN:</span> T08CC4052A<br>
+              <span>Reference:</span> XMAS25
+            </div>
           </div>
         </form>
       </div>
