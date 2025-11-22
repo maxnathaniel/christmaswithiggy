@@ -467,9 +467,34 @@
       font-weight: 500;
       border: 1px solid rgba(255, 216, 119, 0.35);
       box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
-      max-width: 520px;
-      margin-left: auto;
-      margin-right: auto;
+    }
+
+    .paynow-details {
+      margin-top: 1rem;
+      padding: 0.9rem 1.1rem;
+      border-radius: 0.75rem;
+      background: rgba(89, 193, 177, 0.12);
+      border: 1px solid rgba(89, 193, 177, 0.3);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .paynow-title {
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #b8e8df;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .paynow-info {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .paynow-info span {
+      font-weight: 500;
+      color: #c5ebe4;
     }
 
     /* Cards */
@@ -665,20 +690,55 @@
       gap: 0.85rem;
     }
 
-    .rsvp-list li {
+    .rsvp-list > li {
       font-size: 0.95rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .rsvp-list > li::before {
+      content: "• ";
+      color: var(--warm-gold);
+      font-size: 1.2rem;
+    }
+
+    .rsvp-sublist {
+      list-style: none;
+      margin: 0.6rem 0 0 1.5rem;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .rsvp-sublist li {
+      font-size: 0.88rem;
       color: var(--text-muted);
       display: flex;
       gap: 0.5rem;
       align-items: flex-start;
     }
 
-    .rsvp-list li::before {
-      content: "•";
-      color: var(--warm-gold);
-      font-size: 1.2rem;
+    .rsvp-sublist li::before {
+      content: "◦";
+      color: var(--light-soft);
+      font-size: 1rem;
       line-height: 1;
-      margin-top: 0.1rem;
+      margin-top: 0.15rem;
+    }
+
+    .rsvp-note {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-top: 0.85rem;
+    }
+
+    .rsvp-enquiries {
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 2rem;
+      padding: 0 1.5rem;
     }
 
     .form-field {
@@ -937,17 +997,26 @@
       <div class="rsvp-inner" id="rsvpBox">
         <div class="rsvp-copy">
           <h2 class="rsvp-title">RSVP &mdash; Christmas with Iggy</h2>
-          <p class="rsvp-subtitle">
-            Let us know how many are coming so we can prepare food, crafts, and activities for everyone.
-          </p>
-          <p class="offering-note">A love offering of $20 is encouraged to support the evening's hospitality and outreach.</p>
+          <p class="offering-note">A love offering of $20 is encouraged. &#x1F64F;</p>
+          <div class="paynow-details">
+            <div class="paynow-title">PayNow Details</div>
+            <div class="paynow-info">
+              <span>UEN:</span> T08CC4052A<br>
+              <span>Reference:</span> XMAS25
+            </div>
+          </div>
           <ul class="rsvp-list">
-            <li>Venues - Church of St Ignatius Church &middot; Parish Hall &middot; Sacred Heart Hall &middot; Level 2 Rooms</li>
-            <li>4.00PM - Doors Open</li>
-            <li>4.30PM - Finger food is served</li>
-            <li>6.30PM - Main Food is served</li>
-            <li>9.30PM - Finale</li>
+            <li>4.00PM - Doors Open
+              <ul class="rsvp-sublist">
+                <li>Christmas Market</li>
+                <li>Journey to Bethlehem</li>
+                <li>Christmas Tattoo and face painting</li>
+              </ul>
+            </li>
+            <li>6.30PM - Dinner is served</li>
+            <li>8.00PM onwards - Carolling</li>
           </ul>
+          <p class="rsvp-note">*Finger Food will be served before Dinner</p>
         </div>
 
         <form id="rsvpForm" novalidate>
@@ -999,6 +1068,7 @@
           </div>
         </form>
       </div>
+      <p class="rsvp-enquiries">For enquiries, please contact us at christmaswithiggy@gmail.com</p>
     </section>
 
     <footer class="footer">
