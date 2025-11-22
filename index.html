@@ -167,6 +167,7 @@
       pointer-events: none;
       z-index: 3;
       box-shadow: 0 0 18px rgba(255, 216, 119, 0.45);
+      will-change: transform;
       -webkit-mask:
         linear-gradient(#fff 0 0) padding-box,
         linear-gradient(#fff 0 0);
@@ -1065,17 +1066,7 @@
       delay: 0.4
     });
 
-    // Parallax on the poster
-    gsap.to(".parallax", {
-      yPercent: 15,
-      ease: "none",
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
-    });
+    // Parallax on the poster - removed to fix border shifting issue
 
     // Cards entrance (fade + scale, no vertical shift to keep alignment)
     gsap.from(".card", {
