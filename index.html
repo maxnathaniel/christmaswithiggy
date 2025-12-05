@@ -1132,6 +1132,18 @@
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    // Handle /rsvp route - scroll to RSVP section on page load
+    if (window.location.pathname === '/rsvp' || window.location.hash === '#rsvp') {
+      // Wait for page to fully load, then scroll
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          if (rsvpSection) {
+            smoothScrollTo(rsvpSection);
+          }
+        }, 500); // Small delay to ensure animations are done
+      });
+    }
+
     function setSubmitLoading(isLoading) {
       if (!submitButton) return;
       if (isLoading) {
