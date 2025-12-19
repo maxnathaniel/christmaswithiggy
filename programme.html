@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Programme Booklet &mdash; Christmas with Iggy</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="View and download the Christmas with Iggy Programme Booklet" />
+  <meta name="theme-color" content="#031f1e" />
+  <link rel="icon" type="image/png" href="st_Ig_icon.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    :root {
+      --teal-deep: #031f1e;
+      --teal-dark: #01211f;
+      --teal-soft: #59c1b1;
+      --red-coral: #ff8177;
+      --warm-gold: #ffd977;
+      --warm-brown: #c69a6b;
+      --light-soft: #cfe5e2;
+      --offwhite: #fefbf4;
+      --ink: #010d0f;
+      --glass: rgba(2, 21, 23, 0.55);
+      --frost: rgba(255, 255, 255, 0.08);
+      --text-muted: rgba(255, 255, 255, 0.75);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at 20% 20%, #104240, var(--teal-deep) 55%, #010909);
+      background-attachment: fixed;
+      color: var(--offwhite);
+      overflow-x: hidden;
+      line-height: 1.55;
+      letter-spacing: 0.01em;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: clamp(1rem, 2vw, 1.5rem) 1rem;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255, 216, 94, 0.25), transparent 55%),
+        radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.18), transparent 45%),
+        linear-gradient(120deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1400px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      flex-shrink: 0;
+    }
+
+    .page-title {
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 0.3rem;
+      color: #f8f3e9;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .page-subtitle {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 0;
+    }
+
+
+    .pdf-wrapper {
+      background: rgba(3, 20, 21, 0.78);
+      border-radius: 1.5rem;
+      padding: clamp(1rem, 2vw, 1.5rem);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.55);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .pdf-container {
+      width: 100%;
+      height: 85vh;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    .pdf-embed {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .btn {
+      padding: 0.8rem 1.8rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 0.02em;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--red-coral), #ffb088);
+      color: #ffffff;
+      box-shadow: 0 20px 45px rgba(255, 129, 119, 0.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: var(--offwhite);
+      backdrop-filter: blur(6px);
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 25px 55px rgba(0, 0, 0, 0.6);
+    }
+
+    .btn:focus-visible {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 216, 119, 0.35);
+    }
+
+    .btn-icon {
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .note {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+      padding: 0 0.5rem;
+      flex-shrink: 0;
+    }
+
+    /* Mobile fallback message */
+    .mobile-note {
+      display: none;
+      text-align: center;
+      padding: 0.75rem;
+      background: rgba(255, 216, 119, 0.13);
+      border: 1px solid rgba(255, 216, 119, 0.35);
+      border-radius: 0.75rem;
+      color: #ffe5b1;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-note {
+        display: block;
+      }
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.75rem;
+      }
+
+      .pdf-wrapper {
+        padding: 1rem;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1 class="page-title">Programme Booklet</h1>
+      <p class="page-subtitle">Christmas with Iggy 2025</p>
+    </div>
+
+    <div class="pdf-wrapper">
+      <div class="mobile-note">
+        If the PDF preview doesn't display properly on your device, please use the download button below to view it.
+      </div>
+
+      <div class="pdf-container">
+        <embed
+          class="pdf-embed"
+          src="Christmas with Iggy 2025 Programme.pdf"
+          type="application/pdf"
+          title="Christmas with Iggy 2025 Programme Booklet"
+        />
+      </div>
+
+      <div class="actions">
+        <a
+          href="Christmas with Iggy 2025 Programme.pdf"
+          download="Christmas with Iggy 2025 Programme.pdf"
+          class="btn btn-primary"
+        >
+          <span class="btn-icon">&#x2B07;</span>
+          Download PDF
+        </a>
+        <a
+          href="Christmas with Iggy 2025 Programme.pdf"
+          target="_blank"
+          class="btn btn-secondary"
+        >
+          <span class="btn-icon">&#x1F50D;</span>
+          Open in New Tab
+        </a>
+      </div>
+
+      <p class="note">
+        The programme booklet contains the full schedule and details for the Christmas with Iggy event.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
