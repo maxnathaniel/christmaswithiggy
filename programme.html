@@ -15,6 +15,9 @@
     rel="stylesheet"
   />
 
+  <!-- PDF.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
   <style>
     :root {
       --teal-deep: #031f1e;
@@ -111,18 +114,81 @@
 
     .pdf-container {
       width: 100%;
-      height: 85vh;
+      height: auto;
+      max-height: 85vh;
       border-radius: 0.75rem;
-      overflow: hidden;
+      overflow: auto;
       background: rgba(255, 255, 255, 0.95);
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
       margin-bottom: 1rem;
+      position: relative;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
     }
 
     .pdf-embed {
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    #pdfCanvas {
+      display: block;
+      margin: 0;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .pdf-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.75rem;
+      background: rgba(3, 20, 21, 0.95);
+      border-radius: 0.75rem;
+      margin-bottom: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .pdf-controls button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--offwhite);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: inherit;
+    }
+
+    .pdf-controls button:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .pdf-controls button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .pdf-controls button:disabled:hover {
+      transform: none;
+    }
+
+    .pdf-info {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
     }
 
     .actions {
@@ -201,6 +267,10 @@
       flex-shrink: 0;
     }
 
+    .mobile-note.show {
+      display: block;
+    }
+
     @media (max-width: 768px) {
       .mobile-note {
         display: block;
@@ -236,17 +306,19 @@
     </div>
 
     <div class="pdf-wrapper">
-      <div class="mobile-note">
-        If the PDF preview doesn't display properly on your device, please use the download button below to view it.
+      <div class="pdf-controls">
+        <button id="prevPage">← Previous</button>
+        <span class="pdf-info">
+          Page <span id="pageNum">1</span> / <span id="pageCount">-</span>
+        </span>
+        <button id="nextPage">Next →</button>
+        <button id="zoomOut">Zoom Out</button>
+        <button id="zoomIn">Zoom In</button>
       </div>
 
-      <div class="pdf-container">
-        <embed
-          class="pdf-embed"
-          src="Christmas with Iggy 2025 Programme.pdf"
-          type="application/pdf"
-          title="Christmas with Iggy 2025 Programme Booklet"
-        />
+      <div class="pdf-container" id="pdfContainer">
+        <div class="loading-spinner" id="loadingSpinner">Loading PDF...</div>
+        <canvas id="pdfCanvas"></canvas>
       </div>
 
       <div class="actions">
@@ -273,5 +345,160 @@
       </p>
     </div>
   </div>
+
+  <script>
+    // PDF.js Configuration
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+    let pdfDoc = null;
+    let pageNum = 1;
+    let pageRendering = false;
+    let pageNumPending = null;
+    let scale = 1.5;
+
+    const canvas = document.getElementById('pdfCanvas');
+    const ctx = canvas.getContext('2d');
+    const loadingSpinner = document.getElementById('loadingSpinner');
+
+    /**
+     * Render the page
+     */
+    function renderPage(num) {
+      pageRendering = true;
+
+      pdfDoc.getPage(num).then(function(page) {
+        const viewport = page.getViewport({ scale: scale });
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+
+        const renderContext = {
+          canvasContext: ctx,
+          viewport: viewport
+        };
+
+        const renderTask = page.render(renderContext);
+
+        renderTask.promise.then(function() {
+          pageRendering = false;
+          if (pageNumPending !== null) {
+            renderPage(pageNumPending);
+            pageNumPending = null;
+          }
+        });
+      });
+
+      // Update page counters
+      document.getElementById('pageNum').textContent = num;
+    }
+
+    /**
+     * Queue page rendering
+     */
+    function queueRenderPage(num) {
+      if (pageRendering) {
+        pageNumPending = num;
+      } else {
+        renderPage(num);
+      }
+    }
+
+    /**
+     * Show previous page
+     */
+    function onPrevPage() {
+      if (pageNum <= 1) {
+        return;
+      }
+      pageNum--;
+      queueRenderPage(pageNum);
+      updateButtons();
+    }
+
+    /**
+     * Show next page
+     */
+    function onNextPage() {
+      if (pageNum >= pdfDoc.numPages) {
+        return;
+      }
+      pageNum++;
+      queueRenderPage(pageNum);
+      updateButtons();
+    }
+
+    /**
+     * Zoom in
+     */
+    function onZoomIn() {
+      scale += 0.25;
+      queueRenderPage(pageNum);
+    }
+
+    /**
+     * Zoom out
+     */
+    function onZoomOut() {
+      if (scale <= 0.5) {
+        return;
+      }
+      scale -= 0.25;
+      queueRenderPage(pageNum);
+    }
+
+    /**
+     * Update button states
+     */
+    function updateButtons() {
+      document.getElementById('prevPage').disabled = pageNum <= 1;
+      document.getElementById('nextPage').disabled = pageNum >= pdfDoc.numPages;
+    }
+
+    /**
+     * Load and render PDF
+     */
+    const pdfPath = encodeURIComponent('Christmas with Iggy 2025 Programme.pdf');
+
+    // Use fetch to load PDF as ArrayBuffer to avoid CORS issues with file:// protocol
+    fetch(pdfPath)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to fetch PDF: ${response.status} ${response.statusText}`);
+        }
+        return response.arrayBuffer();
+      })
+      .then(arrayBuffer => {
+        return pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      })
+      .then(function(pdfDoc_) {
+        pdfDoc = pdfDoc_;
+        document.getElementById('pageCount').textContent = pdfDoc.numPages;
+
+        // Hide loading spinner
+        loadingSpinner.style.display = 'none';
+
+        // Initial render
+        renderPage(pageNum);
+        updateButtons();
+      })
+      .catch(function(error) {
+        loadingSpinner.textContent = 'Error loading PDF. Please use the download button below.';
+        console.error('Error loading PDF:', error);
+      });
+
+    // Button event listeners
+    document.getElementById('prevPage').addEventListener('click', onPrevPage);
+    document.getElementById('nextPage').addEventListener('click', onNextPage);
+    document.getElementById('zoomIn').addEventListener('click', onZoomIn);
+    document.getElementById('zoomOut').addEventListener('click', onZoomOut);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        onPrevPage();
+      } else if (e.key === 'ArrowRight') {
+        onNextPage();
+      }
+    });
+  </script>
 </body>
 </html>
